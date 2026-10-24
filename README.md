@@ -18,6 +18,57 @@
 
 <hr/>
 
+## Run DocForge locally (Windows)
+
+This repository also includes the DocForge web app for converting PDFs to
+Markdown. Start the Python API and the React frontend in separate PowerShell
+terminals.
+
+### Prerequisites
+
+- Python 3.10 or newer and [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- Node.js 22 and [pnpm](https://pnpm.io/installation)
+- Git
+
+Clone the project and enter its folder:
+
+```powershell
+git clone https://github.com/MohanChoukse/DocForge--any-file-to-markdown.git
+Set-Location DocForge--any-file-to-markdown
+```
+
+### 1. Start the backend
+
+From the project root, install the Python dependencies and start the API:
+
+```powershell
+uv sync --group dev
+uv run uvicorn pdqa_api.main:app --host 127.0.0.1 --port 8000
+```
+
+The API health endpoint is <http://127.0.0.1:8000/api/health> and interactive
+API documentation is at <http://127.0.0.1:8000/docs>.
+
+### 2. Start the frontend
+
+In a second PowerShell terminal, from the project root:
+
+```powershell
+Set-Location frontend
+pnpm install
+pnpm dev
+```
+
+Open <http://127.0.0.1:5173/>. The Vite development server forwards `/api`
+requests to the backend on port 8000.
+
+Select or drag a PDF into the page, choose `Auto`, `Fast`, or `Balanced`, and
+click **Convert to Markdown**. You can preview, copy, or download the result.
+The first conversion may need to download or start the document inference
+models; see the [inference backend prerequisites](#inference-backend-prerequisites)
+below. For GPU-specific setup and conversion options, continue with the Marker
+documentation in this README.
+
 # Marker
 
 Marker converts documents to markdown, JSON, chunks, and HTML quickly and accurately.
